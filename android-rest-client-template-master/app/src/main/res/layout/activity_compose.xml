@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:minWidth="50dp"
+        android:minHeight="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full Name"
+        android:id="@+id/tvFullName"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_toRightOf="@id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:textSize="15sp"
+        android:ellipsize="end" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@twittername"
+        android:id="@+id/tvUsername"
+        android:layout_below="@+id/tvFullName"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:textSize="10sp"
+        android:singleLine="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tweet"
+        android:id="@+id/btnTweet"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="140"
+        android:textSize="10dp"
+        android:id="@+id/tvCount"
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_toLeftOf="@+id/btnTweet"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|right"
+        android:layout_toRightOf="@+id/tvFullName"
+        android:layout_toEndOf="@+id/tvFullName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etTweetBody"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_alignLeft="@+id/ivProfileImage"
+        android:layout_alignStart="@+id/ivProfileImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Please type your tweet message in here."
+        android:layout_alignParentBottom="true"
+        android:minLines="5"
+        android:singleLine="false"
+        android:gravity="top"/>
+
+</RelativeLayout>

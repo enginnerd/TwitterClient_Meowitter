@@ -7,6 +7,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.codepath.apps.meowitter.app.TwitterApp;
 import com.codepath.apps.meowitter.helpers.HelperVars;
 
 import org.json.JSONArray;
@@ -22,6 +23,10 @@ import java.util.List;
 
 @Table(name = "Tweet")
 public class Tweet extends Model{
+    public static final String MENTIONS = "MENTIONS";
+    public static final String REGULAR = "REGULAR";
+    public static final String PASS = "PASS";
+    public static final String PROFILE = "PROFILE";
 
     @Column(name = "body")
     private String body;
@@ -46,6 +51,12 @@ public class Tweet extends Model{
 
     @Column(name = "retweeted")
     private boolean retweeted;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "timeline_owner")
+    private String timeline_owner;
 
     public void setRetweeted(boolean retweeted) {
         this.retweeted = retweeted;
@@ -95,14 +106,15 @@ public class Tweet extends Model{
         super();
     }
 
-    public static Tweet fromJSON(JSONObject jsonObject){
+    public static Tweet fromJSON(JSONObject jsonObject, String type, String screenName){
         Tweet tweet = new Tweet();
         try {
             tweet.body = jsonObject.getString("text");
             tweet.uid = jsonObject.getLong("id");
 //            Log.i("DEBUG", "Tweet id: " + tweet.uid);
             tweet.createdAt = jsonObject.getString("created_at");
-            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
+            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"), false);
             tweet.retweetCount = 0;
             if(jsonObject.has("retweet_count"))
                 tweet.retweetCount = jsonObject.getInt("retweet_count");
@@ -118,6 +130,10 @@ public class Tweet extends Model{
                 tweet.retweeted = true;
             tweet.favorited = jsonObject.getBoolean("favorited");
 //            Log.i("DEBUG", "Favorited? " + jsonObject.getBoolean("favorited"));
+            if(!type.equals(Tweet.PASS)) {
+                tweet.type = type;
+            }
+            tweet.timeline_owner = screenName;
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -125,14 +141,14 @@ public class Tweet extends Model{
         return tweet;
     }
 
-    public static /*ArrayList<Tweet>*/void fromJSONArray(JSONArray jsonArray){
+    public static /*ArrayList<Tweet>*/void fromJSONArray(JSONArray jsonArray, String type, String screenName){
         ActiveAndroid.beginTransaction(); //documentation says to use transaction for bulk work, speeds things up
         try {
 //            ArrayList<Tweet> tweets = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject tweetJson = jsonArray.getJSONObject(i);
-                    Tweet tweet = Tweet.fromJSON(tweetJson);
+                    Tweet tweet = Tweet.fromJSON(tweetJson, type, screenName);
                     if (tweet != null) {
 //                        tweets.add(tweet);
                         tweet.save();
@@ -152,16 +168,40 @@ public class Tweet extends Model{
     }
 
     /* gets last 25 tweets */
-    public static List<Tweet> getAll() {
-        return new Select()
-                .from(Tweet.class)
-                //.where("Tweet = *")
-                .orderBy("createdAt DESC")
-                .limit(HelperVars.TWEET_RETRIEVE_COUNT)
-                .execute();
-    }
+//    public static List<Tweet> getAll() {
+//        return new Select()
+//                .from(Tweet.class)
+//                //.where("Tweet = *")
+//                .orderBy("createdAt DESC")
+//                .limit(HelperVars.TWEET_RETRIEVE_COUNT)
+//                .execute();
+//    }
 
     /* gets last 25 tweets greater than last_id */
+    public static List<Tweet> getAll(long last_id, String type, String screenName) {
+        if(last_id == 1) {
+            return new Select()
+                    .from(Tweet.class)
+//                    .where("uid > ?", last_id)
+                            //.orderBy("createdAt DESC")
+                    .where("type == ?", type)
+                    .and("timeline_owner == ?", screenName)
+                    .orderBy("uid DESC")
+                    .limit(HelperVars.TWEET_RETRIEVE_COUNT)
+                    .execute();
+        }else{
+            return new Select()
+                    .from(Tweet.class)
+//                    .where("uid < ?", last_id)
+                            //.orderBy("createdAt DESC")
+                    .where("type == ?", type)
+                    .and("timeline_owner == ?", screenName)
+                    .orderBy("uid DESC")
+                    .limit(HelperVars.TWEET_RETRIEVE_COUNT)
+                    .execute();
+        }
+    }
+
     public static List<Tweet> getAll(long last_id) {
         if(last_id == 1) {
             return new Select()

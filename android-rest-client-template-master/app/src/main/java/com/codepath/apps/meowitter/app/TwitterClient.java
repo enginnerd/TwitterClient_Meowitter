@@ -27,8 +27,8 @@ import com.loopj.android.http.RequestParams;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "scrubbed";       // Change this
-	public static final String REST_CONSUMER_SECRET = "scrubbed"; // Change this
+	public static final String REST_CONSUMER_KEY = "";       // Change this
+	public static final String REST_CONSUMER_SECRET = ""; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://cpmeowitter"; // Change this (here and in manifest)
 
 	public TwitterClient(Context context) {
@@ -55,6 +55,13 @@ public class TwitterClient extends OAuthBaseClient {
             params.put("max_id", /*1*/max_id);
         }
 
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getMentionsTimeline(AsyncHttpResponseHandler handler, int count, long max_id){
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", /*25*/count);
         getClient().get(apiUrl, params, handler);
     }
 
@@ -94,5 +101,20 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("id", Long.valueOf(id));
         getClient().post(apiUrl, params, handler);
     }
-    //compose a tweet
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("screen_name", screenName);
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getUserInfo(AsyncHttpResponseHandler handler, String screenName){
+//        String apiUrl = getApiUrl("account/verify_credentials.json");
+        String apiUrl = getApiUrl("users/show.json");
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        getClient().get(apiUrl, params, handler);
+    }
 }

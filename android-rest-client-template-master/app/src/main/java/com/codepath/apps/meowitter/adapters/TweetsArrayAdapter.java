@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.meowitter.R;
+import com.codepath.apps.meowitter.activities.ProfileActivity;
 import com.codepath.apps.meowitter.activities.TimelineActivity;
 import com.codepath.apps.meowitter.app.TwitterApp;
 import com.codepath.apps.meowitter.helpers.HelperVars;
@@ -138,6 +139,16 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
                 Intent i = new Intent(getContext(), TimelineActivity.class);
                 i.putExtra(HelperVars.INTENT_KEY_COMPOSE, c);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                TwitterApp.context.startActivity(i);
+            }
+        });
+
+        viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("screen_name", f_tweet.getUser().getScreenName());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 TwitterApp.context.startActivity(i);
             }

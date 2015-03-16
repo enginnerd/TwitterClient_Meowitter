@@ -1,9 +1,34 @@
-# Twitter Client - Week 3 CodePath Android Assignment
+# Twitter Client - Week 3 and Week 4 CodePath Android Assignment
 
 This is an Android demo of a Twitter Client.
 
 Time spent: lots of hours spent in total
 
+Week 4
+Completed user stories:
+
+* [x] Required:	Includes all required user stories from Week 3 Twitter Client
+* [x] Required:	User can switch between Timeline and Mention views using tabs.
+* [x] Required: User can view their home timeline tweets.
+* [x] Required:	User can view the recent mentions of their username.
+* [x] Required: User can navigate to view their own profile
+* [x] Required: User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+* [x] Required: User can click on the profile image in any tweet to see another user's profile.
+* [x] Required: User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+* [x] Required: Profile view should include that user's timeline
+* [x] Required: User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
+* [x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures
+* [x] Advanced (done in Week 3): User can "reply" to any tweet on their home timeline
+* [x] Advanced (done in Week 3): The user that wrote the original tweet is automatically "@" replied in compose
+* [x] Advanced (done in Week 3): User can take favorite (and unfavorite) or reweet actions on a tweet
+* [x] Advanced: Improve the user interface and theme the app to feel twitter branded; updated the login screen
+
+
+
+![Video Walkthrough](Meowitter_2.gif)
+
+
+Week 3
 Completed user stories:
 
 * [x] Required: User can sign in to Twitter using OAuth login

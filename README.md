@@ -55,7 +55,6 @@ Completed user stories:
 Notes:
 The oauth key and secret were scrubbed from source for checking.
 
-
 ![Video Walkthrough](Meowitter.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
